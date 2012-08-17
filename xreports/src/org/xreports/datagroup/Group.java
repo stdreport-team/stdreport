@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.xreports.dmc.SimpleList;
 import org.xreports.expressions.symbols.EvaluateException;
 import org.xreports.expressions.symbols.Symbol;
 import org.xreports.engine.DataException;
@@ -1262,24 +1261,6 @@ public class Group implements Serializable {
       keys += key.getNome() + "=" + key.getValue();
     }
     return keys;
-  }
-
-  /**
-   * Passaggio dei valori tramite SimpleList. Con questo metodo vengono scanditi
-   * tutti i record della SimpleList e passati ai gruppi uno ad uno. Assume che
-   * la lista sia già stata caricata con uno dei suoi metodi load.
-   * 
-   * @param sl
-   *          simplelist da cui leggere i dati
-   * @throws GroupException
-   * @throws EvaluateException 
-   * @throws DataException 
-   */
-  public void assignSimpleList(SimpleList sl) throws GroupException, DataException, EvaluateException {
-    for (int i = 0; i < sl.getCount(); i++) {
-      Map<String, Object> row = sl.get(i);
-      assignData(row);
-    }
   }
 
   /**
