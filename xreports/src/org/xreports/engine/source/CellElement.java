@@ -6,14 +6,14 @@ import java.util.List;
 import org.xml.sax.Attributes;
 
 import org.xreports.datagroup.Group;
-import org.xreports.stampa.ResolveException;
-import org.xreports.stampa.Stampa;
-import org.xreports.stampa.output.Cella;
-import org.xreports.stampa.output.Elemento;
-import org.xreports.stampa.output.impl.GenerateException;
-import org.xreports.stampa.source.Border.BorderStyle;
-import org.xreports.stampa.validation.ValidateException;
-import org.xreports.stampa.validation.XMLSchemaValidationHandler;
+import org.xreports.engine.ResolveException;
+import org.xreports.engine.XReport;
+import org.xreports.engine.output.Cella;
+import org.xreports.engine.output.Elemento;
+import org.xreports.engine.output.impl.GenerateException;
+import org.xreports.engine.source.Border.BorderStyle;
+import org.xreports.engine.validation.ValidateException;
+import org.xreports.engine.validation.XMLSchemaValidationHandler;
 
 import org.xreports.expressions.symbols.EvaluateException;
 
@@ -242,7 +242,7 @@ public class CellElement extends AbstractElement {
   }
 
   @Override
-  public List<Elemento> generate(Group gruppo, Stampa stampa, Elemento padre) throws GenerateException {
+  public List<Elemento> generate(Group gruppo, XReport stampa, Elemento padre) throws GenerateException {
     try {
       salvaStampaGruppo(stampa, gruppo);
       List<Elemento> listaElementi = new LinkedList<Elemento>();
@@ -274,7 +274,7 @@ public class CellElement extends AbstractElement {
     }
   }
 
-  private Cella generateCella(Group gruppo, Stampa stampa, Elemento padre) throws GenerateException {
+  private Cella generateCella(Group gruppo, XReport stampa, Elemento padre) throws GenerateException {
     Cella cella = stampa.getFactoryElementi().creaCella(stampa, this, padre);
     for (IReportNode reportElem : c_elementiFigli) {
       List<Elemento> listaFiglio = reportElem.generate(gruppo, stampa, cella);

@@ -17,8 +17,8 @@ import java.util.List;
 import java.util.Scanner;
 
 import org.xreports.datagroup.DataFieldModel.TipoCampo;
-import org.xreports.stampa.DataException;
-import org.xreports.stampa.Stampa;
+import org.xreports.engine.DataException;
+import org.xreports.engine.XReport;
 import org.xreports.util.Text;
 
 /**

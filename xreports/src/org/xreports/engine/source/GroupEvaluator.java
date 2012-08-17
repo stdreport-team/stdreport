@@ -6,7 +6,7 @@ package org.xreports.engine.source;
 import org.xreports.datagroup.Group;
 import org.xreports.expressions.symbols.EvaluateException;
 import org.xreports.expressions.symbols.Symbol;
-import org.xreports.stampa.ResolveException;
+import org.xreports.engine.ResolveException;
 
 /**
  * Interfaccia per oggetti che valutano simboli nel contesto di un gruppo

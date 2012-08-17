@@ -5,7 +5,7 @@ package org.xreports.engine.source;
 
 import java.util.Scanner;
 
-import org.xreports.stampa.validation.ValidateException;
+import org.xreports.engine.validation.ValidateException;
 
 /**
  * Rappresenta i 4 margini di vari elementi grafici. E' in pratica un array di 4 {@link Measure}, una per lato.

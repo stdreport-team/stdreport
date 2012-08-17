@@ -10,16 +10,16 @@ import org.xml.sax.Attributes;
 
 import org.xreports.datagroup.Group;
 import org.xreports.datagroup.GroupModel;
-import org.xreports.exceptions.CISException;
+
 import org.xreports.expressions.symbols.EvaluateException;
 import org.xreports.expressions.symbols.Symbol;
-import org.xreports.stampa.Stampa;
-import org.xreports.stampa.Stampa.GenerationStatus;
-import org.xreports.stampa.output.Documento;
-import org.xreports.stampa.output.Elemento;
-import org.xreports.stampa.output.impl.GenerateException;
-import org.xreports.stampa.validation.ValidateException;
-import org.xreports.stampa.validation.XMLSchemaValidationHandler;
+import org.xreports.engine.XReport;
+import org.xreports.engine.XReport.GenerationStatus;
+import org.xreports.engine.output.Documento;
+import org.xreports.engine.output.Elemento;
+import org.xreports.engine.output.impl.GenerateException;
+import org.xreports.engine.validation.ValidateException;
+import org.xreports.engine.validation.XMLSchemaValidationHandler;
 import org.xreports.util.Text;
 
 public class GroupElement extends AbstractElement {
@@ -345,7 +345,7 @@ public class GroupElement extends AbstractElement {
   }
 
   @Override
-  public List<Elemento> generate(Group gruppo, Stampa stampa, Elemento padre) throws GenerateException {
+  public List<Elemento> generate(Group gruppo, XReport stampa, Elemento padre) throws GenerateException {
     // Sono un tag group quindi cambio il contesto e passo il mio gruppo
     // parametro 'gruppo' = Group corrente globale, che deve essere un'istanza
     // del gruppo padre di questo
@@ -428,7 +428,7 @@ public class GroupElement extends AbstractElement {
     return "</" + XMLSchemaValidationHandler.ELEMENTO_GROUP + ">";
   }
 
-  private List<Elemento> createOutputForGroup(Group gruppo, Stampa stampa, Elemento padre) throws GenerateException {
+  private List<Elemento> createOutputForGroup(Group gruppo, XReport stampa, Elemento padre) throws GenerateException {
     List<Elemento> listaFinaleGruppo = new LinkedList<Elemento>();
     List<Elemento> listaElementi = new LinkedList<Elemento>();
     if (stampa.isDebugMode()) {

@@ -6,15 +6,15 @@ import java.util.List;
 import org.xml.sax.Attributes;
 
 import org.xreports.datagroup.Group;
-import org.xreports.stampa.Stampa;
-import org.xreports.stampa.output.Elemento;
-import org.xreports.stampa.output.impl.GenerateException;
-import org.xreports.stampa.validation.ValidateException;
-import org.xreports.stampa.validation.XMLSchemaValidationHandler;
+import org.xreports.engine.XReport;
+import org.xreports.engine.output.Elemento;
+import org.xreports.engine.output.impl.GenerateException;
+import org.xreports.engine.validation.ValidateException;
+import org.xreports.engine.validation.XMLSchemaValidationHandler;
 
 public class BookmarkElement extends BookmarkableElement {
 
-  public BookmarkElement(Stampa stampa, Attributes attrs, int lineNum, int colNum) throws ValidateException {
+  public BookmarkElement(XReport stampa, Attributes attrs, int lineNum, int colNum) throws ValidateException {
     super(stampa, attrs, lineNum, colNum);    
   }
   
@@ -28,7 +28,7 @@ public class BookmarkElement extends BookmarkableElement {
   }
 
   @Override
-  public List<Elemento> generate(Group gruppo, Stampa stampa, Elemento padre) throws GenerateException {
+  public List<Elemento> generate(Group gruppo, XReport stampa, Elemento padre) throws GenerateException {
     try {
       salvaStampaGruppo(stampa, gruppo);
 

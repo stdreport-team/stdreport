@@ -9,19 +9,18 @@ import org.xreports.datagroup.GroupException;
 import org.xreports.datagroup.GroupModel;
 import org.xreports.datagroup.RootGroup;
 import org.xreports.datagroup.RootModel;
-import org.xreports.dmc.SimpleList;
+
 import org.xreports.expressions.symbols.EvaluateException;
-import org.xreports.stampa.DataException;
-import org.xreports.stampa.NoDataException;
-import org.xreports.stampa.Stampa;
-import org.xreports.stampa.source.AbstractElement;
-import org.xreports.stampa.source.CellElement;
-import org.xreports.stampa.source.ChartElement;
-import org.xreports.stampa.source.GroupElement;
-import org.xreports.stampa.source.IReportElement;
-import org.xreports.stampa.source.IReportNode;
-import org.xreports.stampa.validation.ValidateException;
-import org.xreports.stampa.validation.XMLSchemaValidationHandler;
+import org.xreports.engine.DataException;
+import org.xreports.engine.NoDataException;
+import org.xreports.engine.source.AbstractElement;
+import org.xreports.engine.source.CellElement;
+import org.xreports.engine.source.ChartElement;
+import org.xreports.engine.source.GroupElement;
+import org.xreports.engine.source.IReportElement;
+import org.xreports.engine.source.IReportNode;
+import org.xreports.engine.validation.ValidateException;
+import org.xreports.engine.validation.XMLSchemaValidationHandler;
 
 /**
  * Contiene tutte le informazioni del singolo report, che riguardano sia
@@ -128,8 +127,6 @@ public class ReportInfo implements Destroyable {
       if (query instanceof String) {
         setQuery(query.toString());
         return loadQuery(query.toString());
-      } else if (query instanceof SimpleList) {
-        return loadList((SimpleList) query);
       } else if (query instanceof List<?>) {
         //lista dati fornita dal metodo utente: non posso azzerarla 
         return loadDataList((List<HashMap<String, Object>>)query, false);
@@ -191,7 +188,7 @@ public class ReportInfo implements Destroyable {
     int recordsInDB = 0;
     try {
       m_stampa.addDebugMessage("Esecuzione query per caricamento dati:\n  " + sql);
-      List<HashMap<String, Object>> righe = m_stampa.getDatabase().getRowsAsMap(sql);
+      List<HashMap<String, Object>> righe = m_stampa.getDatabase().getRows(sql, -1);
       recordsInDB = loadDataList(righe, true);
       righe.clear();
     } catch (DataException e) {
@@ -256,31 +253,6 @@ public class ReportInfo implements Destroyable {
   }
   
   
-  public int loadList(SimpleList list) throws DataException {
-    //qui c'è il codice solo per caricare dalla simplelist
-    //il codice per caricare con la query è nella super classe
-    m_rootModel.setDebugMode(m_stampa.isDebugMode());
-    if ( !list.isLoaded()) {
-      list.setMaxNumRecords(m_stampa.getMaxNumRecords());
-      if ( !list.load()) {
-        throw new DataException("Errore in caricamento dati con la lista");
-      }
-    }
-    int recordsInDB = list.getCount();
-    m_stampa.addInfoMessage("Associata SimpleList, qta records " + recordsInDB);
-    if (recordsInDB == 0) {
-      throw new NoDataException(ERR_NODATA);
-    }
-    try {
-      //azzero i dati che potrebbero esserci i precedenti istanze del subreport
-      m_rootModel.clearData();
-      m_rootModel.assignSimpleList(list, m_stampa.getMaxNumRecords());
-    } catch (GroupException e) {
-      throw new DataException("Errore in caricamento dei dati SQL: " + e.toString());
-    }
-    return recordsInDB;
-  }
-
   /**
    * Metodo che ha il compito di effettuare controlli ed elaborazioni possibili
    * solo dopo la costruzione di tutti gli elementi del report.

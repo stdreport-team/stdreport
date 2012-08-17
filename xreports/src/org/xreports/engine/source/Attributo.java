@@ -1,16 +1,14 @@
 package org.xreports.engine.source;
 
 import org.xml.sax.Attributes;
-
+import org.xreports.engine.ResolveException;
+import org.xreports.engine.XReport;
+import org.xreports.engine.output.Colore;
+import org.xreports.engine.output.impl.GenerateException;
+import org.xreports.engine.validation.ValidateException;
 import org.xreports.expressions.parsers.GenericParser;
 import org.xreports.expressions.parsers.GenericParser.ParserType;
-import org.xreports.expressions.symbols.EvaluateException;
 import org.xreports.expressions.symbols.Symbol;
-import org.xreports.stampa.ResolveException;
-import org.xreports.stampa.Stampa;
-import org.xreports.stampa.output.Colore;
-import org.xreports.stampa.output.impl.GenerateException;
-import org.xreports.stampa.validation.ValidateException;
 
 public class Attributo {
   private String   c_nome             = null;
@@ -28,7 +26,7 @@ public class Attributo {
   private String   c_stringValue      = null;
   private Class<?> c_classeDato       = null;
   
-  private Stampa   c_stampa      = null;
+  private XReport   c_report      = null;
   
   /**
    * risultato dell'analisi del parser: è il simbolo top level dell'albero
@@ -85,11 +83,11 @@ public class Attributo {
    *          oggetto stampa corrente
    * 
    */
-  public Attributo(String nome, Class<?> classeDato, String valoreDefault, Stampa stampa) {
+  public Attributo(String nome, Class<?> classeDato, String valoreDefault, XReport stampa) {
     c_nome = nome;
     c_classeDato = classeDato;
     c_defaultValue = valoreDefault;
-    c_stampa = stampa;
+    c_report = stampa;
   }
 
   /**
@@ -189,12 +187,12 @@ public class Attributo {
         if (c_stringValue != null) {
           char first = c_stringValue.charAt(0);
           if (Character.isLetter(first))
-            c_objValue = c_stampa.getColorByName(c_stringValue);
+            c_objValue = c_report.getColorByName(c_stringValue);
           else
             c_objValue = Colore.getInstance("dummyfor" + this.toString(), c_stringValue, 0);
         } else {
           if (c_defaultValue != null) {
-            c_objValue = c_stampa.getColorByName(c_defaultValue);
+            c_objValue = c_report.getColorByName(c_defaultValue);
           }
         }
       }

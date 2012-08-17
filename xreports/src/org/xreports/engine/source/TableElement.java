@@ -7,13 +7,13 @@ import java.util.Scanner;
 import org.xml.sax.Attributes;
 
 import org.xreports.datagroup.Group;
-import org.xreports.stampa.ResolveException;
-import org.xreports.stampa.Stampa;
-import org.xreports.stampa.output.Elemento;
-import org.xreports.stampa.output.Tabella;
-import org.xreports.stampa.output.impl.GenerateException;
-import org.xreports.stampa.validation.ValidateException;
-import org.xreports.stampa.validation.XMLSchemaValidationHandler;
+import org.xreports.engine.ResolveException;
+import org.xreports.engine.XReport;
+import org.xreports.engine.output.Elemento;
+import org.xreports.engine.output.Tabella;
+import org.xreports.engine.output.impl.GenerateException;
+import org.xreports.engine.validation.ValidateException;
+import org.xreports.engine.validation.XMLSchemaValidationHandler;
 import org.xreports.expressions.symbols.EvaluateException;
 import org.xreports.expressions.symbols.NumberLiteral;
 import org.xreports.expressions.symbols.Symbol;
@@ -320,7 +320,7 @@ public class TableElement extends AbstractElement {
   }
 
   @Override
-  public List<Elemento> generate(Group gruppo, Stampa stampa, Elemento padre) throws GenerateException {
+  public List<Elemento> generate(Group gruppo, XReport stampa, Elemento padre) throws GenerateException {
 	  try {
     	salvaStampaGruppo(stampa, gruppo);
 			List<Elemento> listaElementi = new LinkedList<Elemento>();

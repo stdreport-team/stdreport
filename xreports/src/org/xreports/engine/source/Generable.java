@@ -3,9 +3,9 @@ package org.xreports.engine.source;
 import java.util.List;
 
 import org.xreports.datagroup.Group;
-import org.xreports.stampa.Stampa;
-import org.xreports.stampa.output.Elemento;
-import org.xreports.stampa.output.impl.GenerateException;
+import org.xreports.engine.XReport;
+import org.xreports.engine.output.Elemento;
+import org.xreports.engine.output.impl.GenerateException;
 
 public interface Generable {
 
@@ -23,6 +23,6 @@ public interface Generable {
    * @throws GenerateException
    *           nel caso di incongruenze o impossibilità nella risoluzione di valori.
    */
-  public List<Elemento> generate(Group gruppo, Stampa stampa, Elemento padre) throws GenerateException;
+  public List<Elemento> generate(Group gruppo, XReport report, Elemento padre) throws GenerateException;
 
 }

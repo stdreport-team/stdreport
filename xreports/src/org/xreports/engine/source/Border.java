@@ -5,8 +5,8 @@ package org.xreports.engine.source;
 
 import java.util.Scanner;
 
-import org.xreports.stampa.output.Colore;
-import org.xreports.stampa.validation.ValidateException;
+import org.xreports.engine.output.Colore;
+import org.xreports.engine.validation.ValidateException;
 
 /**
  * Riconosce una sintassi del seguente tipo: "misura stile colore".

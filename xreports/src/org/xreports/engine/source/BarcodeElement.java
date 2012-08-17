@@ -2,11 +2,11 @@ package org.xreports.engine.source;
 
 import org.xml.sax.Attributes;
 
-import org.xreports.stampa.Stampa;
-import org.xreports.stampa.output.Elemento;
-import org.xreports.stampa.output.Immagine;
-import org.xreports.stampa.output.impl.GenerateException;
-import org.xreports.stampa.validation.ValidateException;
+import org.xreports.engine.XReport;
+import org.xreports.engine.output.Elemento;
+import org.xreports.engine.output.Immagine;
+import org.xreports.engine.output.impl.GenerateException;
+import org.xreports.engine.validation.ValidateException;
 import org.xreports.util.Text;
 
 /**
@@ -28,7 +28,7 @@ public class BarcodeElement extends FieldElement {
   /** Nomi della controparte XML degli attributi del Tag "number" */
   private static final String ATTRIB_HEIGHT  = "height";
 
-  public BarcodeElement(Stampa stampa, Attributes attrs, int lineNum, int colNum) throws ValidateException {
+  public BarcodeElement(XReport stampa, Attributes attrs, int lineNum, int colNum) throws ValidateException {
     super(stampa, attrs, lineNum, colNum);
   }
 
@@ -59,7 +59,7 @@ public class BarcodeElement extends FieldElement {
   }
 
   @Override
-  protected Elemento createOutputElement(Stampa stampa, Elemento padre) throws GenerateException {
+  protected Elemento createOutputElement(XReport stampa, Elemento padre) throws GenerateException {
     Immagine immagine = stampa.getFactoryElementi().creaImmagine(stampa, this, padre);
     immagine.fineGenerazione();
     return immagine;

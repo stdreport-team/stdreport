@@ -3,7 +3,7 @@
  */
 package org.xreports.engine;
 
-import org.xreports.stampa.source.AbstractElement;
+import org.xreports.engine.source.AbstractElement;
 
 /**
  * @author pier

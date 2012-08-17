@@ -2,15 +2,13 @@ package org.xreports.engine;
 
 import java.math.BigDecimal;
 
+import org.xreports.engine.validation.ValidateException;
 import org.xreports.expressions.lexer.LexerException;
 import org.xreports.expressions.parsers.GenericParser;
-import org.xreports.expressions.parsers.ParseException;
 import org.xreports.expressions.parsers.GenericParser.ParserType;
+import org.xreports.expressions.parsers.ParseException;
 import org.xreports.expressions.symbols.EvaluateException;
 import org.xreports.expressions.symbols.Symbol;
-import org.xreports.stampa.Stampa;
-import org.xreports.stampa.source.AbstractElement;
-import org.xreports.stampa.validation.ValidateException;
 
 /**
  * Classe che implementa il generico parametro del report.

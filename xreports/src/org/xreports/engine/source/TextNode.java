@@ -5,11 +5,11 @@ import java.util.List;
 
 import org.xreports.datagroup.Group;
 import org.xreports.expressions.symbols.EvaluateException;
-import org.xreports.stampa.ResolveException;
-import org.xreports.stampa.Stampa;
-import org.xreports.stampa.output.BloccoTesto;
-import org.xreports.stampa.output.Elemento;
-import org.xreports.stampa.output.impl.GenerateException;
+import org.xreports.engine.ResolveException;
+import org.xreports.engine.XReport;
+import org.xreports.engine.output.BloccoTesto;
+import org.xreports.engine.output.Elemento;
+import org.xreports.engine.output.impl.GenerateException;
 import org.xreports.util.Text;
 
 public class TextNode extends AbstractNode {
@@ -22,7 +22,7 @@ public class TextNode extends AbstractNode {
   }
 
   @Override
-  public List<Elemento> generate(Group gruppo, Stampa stampa, Elemento padre) throws GenerateException {
+  public List<Elemento> generate(Group gruppo, XReport stampa, Elemento padre) throws GenerateException {
     boolean generate = true;  //!isSpace();
     
     List<Elemento> listaElementi = new LinkedList<Elemento>();

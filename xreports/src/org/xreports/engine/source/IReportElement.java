@@ -2,7 +2,7 @@ package org.xreports.engine.source;
 
 import java.util.List;
 
-import org.xreports.stampa.validation.ValidateException;
+import org.xreports.engine.validation.ValidateException;
 
 /**
  * Questa interfaccia identifica tutti gli elementi composti del sorgente del report. <br/>

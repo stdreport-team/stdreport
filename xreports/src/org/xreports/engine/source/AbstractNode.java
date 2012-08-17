@@ -3,7 +3,7 @@ package org.xreports.engine.source;
 import org.xml.sax.Attributes;
 
 import org.xreports.Destroyable;
-import org.xreports.stampa.validation.ValidateException;
+import org.xreports.engine.validation.ValidateException;
 
 /**
  * Rappresenta un qualsiasi nodo del report XML significativo per il sistema. <br>

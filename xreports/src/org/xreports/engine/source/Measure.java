@@ -3,7 +3,7 @@
  */
 package org.xreports.engine.source;
 
-import org.xreports.stampa.validation.ValidateException;
+import org.xreports.engine.validation.ValidateException;
 import org.xreports.util.Text;
 
 /**

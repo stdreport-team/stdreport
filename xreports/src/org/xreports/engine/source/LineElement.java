@@ -9,12 +9,12 @@ import java.util.List;
 import org.xml.sax.Attributes;
 
 import org.xreports.datagroup.Group;
-import org.xreports.stampa.Stampa;
-import org.xreports.stampa.output.Colore;
-import org.xreports.stampa.output.Elemento;
-import org.xreports.stampa.output.Linea;
-import org.xreports.stampa.output.impl.GenerateException;
-import org.xreports.stampa.validation.ValidateException;
+import org.xreports.engine.XReport;
+import org.xreports.engine.output.Colore;
+import org.xreports.engine.output.Elemento;
+import org.xreports.engine.output.Linea;
+import org.xreports.engine.output.impl.GenerateException;
+import org.xreports.engine.validation.ValidateException;
 
 /**
  * @author pier
@@ -52,7 +52,7 @@ public class LineElement extends AbstractElement {
   private static final String DEFAULT_MARGINBOT = "0";
   public static final float   DEFAULT_THICKNESS = 0.5f;
 
-  public LineElement(Stampa stampa, Attributes attrs, int lineNum, int colNum) throws ValidateException {
+  public LineElement(XReport stampa, Attributes attrs, int lineNum, int colNum) throws ValidateException {
     super(stampa, attrs, lineNum, colNum);    
   }
 
@@ -120,7 +120,7 @@ public class LineElement extends AbstractElement {
   }
 
   @Override
-  public List<Elemento> generate(Group gruppo, Stampa stampa, Elemento padre) throws GenerateException {
+  public List<Elemento> generate(Group gruppo, XReport stampa, Elemento padre) throws GenerateException {
     try {
       if (isDebugData()) {
         stampa.addToDebugFile("\n" + getXMLOpenTag());

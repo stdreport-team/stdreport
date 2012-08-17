@@ -2,9 +2,9 @@ package org.xreports.engine.source;
 
 import org.xml.sax.Attributes;
 
-import org.xreports.stampa.Stampa;
-import org.xreports.stampa.output.Colore;
-import org.xreports.stampa.validation.ValidateException;
+import org.xreports.engine.XReport;
+import org.xreports.engine.output.Colore;
+import org.xreports.engine.validation.ValidateException;
 
 /**
  * Elemento virtuale che ha il solo scopo di raggruppare le caratteristiche comuni a {@link SpanElement},
@@ -18,7 +18,7 @@ public abstract class ChunkElement extends BookmarkableElement {
   public static final String ATTRIB_CHARSPACING     = "charSpacing";
   public static final String ATTRIB_Y               = "y";
 
-  public ChunkElement(Stampa stampa, Attributes attrs, int lineNum, int colNum) throws ValidateException {
+  public ChunkElement(XReport stampa, Attributes attrs, int lineNum, int colNum) throws ValidateException {
     super(stampa, attrs, lineNum, colNum);
   }
 

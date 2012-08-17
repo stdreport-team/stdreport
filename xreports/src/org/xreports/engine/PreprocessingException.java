@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.xreports.stampa;
+package org.xreports.engine;
 
 /**
  * @author pier

@@ -1,4 +1,4 @@
-package org.xreports.stampa;
+package org.xreports.engine;
 
 public class NoDataException extends DataException {
   private static final long serialVersionUID = 1L;

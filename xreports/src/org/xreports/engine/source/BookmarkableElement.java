@@ -4,9 +4,9 @@ import org.xml.sax.Attributes;
 
 import org.xreports.expressions.symbols.EvaluateException;
 import org.xreports.expressions.symbols.Symbol;
-import org.xreports.stampa.ResolveException;
-import org.xreports.stampa.Stampa;
-import org.xreports.stampa.validation.ValidateException;
+import org.xreports.engine.ResolveException;
+import org.xreports.engine.XReport;
+import org.xreports.engine.validation.ValidateException;
 
 /**
  * elemento astratto padre di tutti gli elementi bookmarkabili.
@@ -25,7 +25,7 @@ public abstract class BookmarkableElement extends AbstractElement {
     super(attrs, lineNum, colNum);
   }
 
-  public BookmarkableElement(Stampa stp, Attributes attrs, int lineNum, int colNum) throws ValidateException {
+  public BookmarkableElement(XReport stp, Attributes attrs, int lineNum, int colNum) throws ValidateException {
     super(stp, attrs, lineNum, colNum);
   }
 

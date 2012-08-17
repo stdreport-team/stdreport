@@ -6,7 +6,6 @@ package org.xreports.datagroup;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.xreports.dmc.SimpleList;
 
 /**
  * @author pier
@@ -102,43 +101,6 @@ public class RootModel extends GroupModel {
     }
   }
 
-  /**
-   * Assegna tutte le righe della SimpleList passata alla gerarchia dei gruppi. Crea, se necessario, il RootGroup padre di tutta la
-   * gerarchia.
-   * 
-   * @param sl
-   *          SimpleList da cui prendere i dati da assegnare ai gruppi
-   * @throws GroupException
-   *           nel caso di errori gravi in assegnamento dei dati
-   */
-  public void assignSimpleList(SimpleList sl) throws GroupException {
-    for (int i = 0; i < sl.getCount(); i++) {
-      Map<String, Object> row = sl.get(i);
-      assignData(row);
-    }
-  }
-
-  /**
-   * Assegna tutte le righe della SimpleList passata alla gerarchia dei gruppi. Crea, se necessario, il RootGroup padre di tutta la
-   * gerarchia.
-   * 
-   * @param sl
-   *          SimpleList da cui prendere i dati da assegnare ai gruppi
-   * @param maxRecords
-   *          numero max di record da caricare: gli eccedenti vengono semplicemente ignorati
-   * @throws GroupException
-   *           nel caso di errori gravi in assegnamento dei dati
-   * 
-   */
-  public void assignSimpleList(SimpleList sl, int maxRecords) throws GroupException {
-    for (int i = 0; i < sl.getCount(); i++) {
-      if (i >= maxRecords) {
-        break;
-      }
-      Map<String, Object> row = sl.get(i);
-      assignData(row);
-    }
-  }
 
   /**
    * Ritorna il gruppo radice della gerarchia di tutti i gruppi. Tutti i dati sono contenuti in una struttura ad albero i cui nodi

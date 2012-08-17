@@ -11,13 +11,13 @@ import org.xml.sax.Attributes;
 import org.xreports.datagroup.Group;
 import org.xreports.expressions.symbols.EvaluateException;
 import org.xreports.expressions.symbols.Symbol;
-import org.xreports.stampa.Stampa;
-import org.xreports.stampa.output.Colore;
-import org.xreports.stampa.output.Elemento;
-import org.xreports.stampa.output.Watermark;
-import org.xreports.stampa.output.impl.GenerateException;
-import org.xreports.stampa.validation.ValidateException;
-import org.xreports.stampa.validation.XMLSchemaValidationHandler;
+import org.xreports.engine.XReport;
+import org.xreports.engine.output.Colore;
+import org.xreports.engine.output.Elemento;
+import org.xreports.engine.output.Watermark;
+import org.xreports.engine.output.impl.GenerateException;
+import org.xreports.engine.validation.ValidateException;
+import org.xreports.engine.validation.XMLSchemaValidationHandler;
 import org.xreports.util.Text;
 
 /**
@@ -37,7 +37,7 @@ public class WatermarkElement extends AbstractElement {
   private static final String ATTRIB_COLOR            = "color";
   private static final String ATTRIB_REFCOLOR         = "refColor";
 	
-	public WatermarkElement(Stampa stampa, Attributes attrs, int lineNum, int colNum)
+	public WatermarkElement(XReport stampa, Attributes attrs, int lineNum, int colNum)
 			throws ValidateException {
 		super(stampa, attrs, lineNum, colNum);
 	}
@@ -75,7 +75,7 @@ public class WatermarkElement extends AbstractElement {
 	}
 
 	@Override
-	public List<Elemento> generate(Group gruppo, Stampa stampa, Elemento padre)
+	public List<Elemento> generate(Group gruppo, XReport stampa, Elemento padre)
 			throws GenerateException {
 		try {
 			if (isDebugData()) {
@@ -141,7 +141,7 @@ public class WatermarkElement extends AbstractElement {
 		return m;
 	}
 
-	public String getText(Stampa stp) throws EvaluateException {	 
+	public String getText(XReport stp) throws EvaluateException {	 
 		if (Text.isValue(getAttributeText(ATTRIB_TEXT))) {
 	    Symbol s = getAttrSymbol(ATTRIB_TEXT);
 	    if (s != null) {

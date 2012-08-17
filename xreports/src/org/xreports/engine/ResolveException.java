@@ -1,6 +1,6 @@
-package org.xreports.stampa;
+package org.xreports.engine;
 
-import org.xreports.stampa.source.AbstractElement;
+import org.xreports.engine.source.AbstractElement;
 
 /**
  * Tipo di eccezione innescata per errori in valutazione espressioni durante

@@ -15,12 +15,12 @@ import org.xreports.datagroup.UserCalcListener;
 import org.xreports.expressions.symbols.EvaluateException;
 import org.xreports.expressions.symbols.Field;
 import org.xreports.expressions.symbols.Symbol;
-import org.xreports.stampa.Stampa;
-import org.xreports.stampa.output.BloccoTesto;
-import org.xreports.stampa.output.Elemento;
-import org.xreports.stampa.output.impl.GenerateException;
-import org.xreports.stampa.validation.ValidateException;
-import org.xreports.stampa.validation.XMLSchemaValidationHandler;
+import org.xreports.engine.XReport;
+import org.xreports.engine.output.BloccoTesto;
+import org.xreports.engine.output.Elemento;
+import org.xreports.engine.output.impl.GenerateException;
+import org.xreports.engine.validation.ValidateException;
+import org.xreports.engine.validation.XMLSchemaValidationHandler;
 
 public class FieldElement extends ChunkElement implements UserCalcListener {
   /** Nomi della controparte XML degli attributi dell'elemento "field" */
@@ -37,7 +37,7 @@ public class FieldElement extends ChunkElement implements UserCalcListener {
    */
   private String                c_evaluatedExpression = null;
 
-  public FieldElement(Stampa stampa, Attributes attrs, int lineNum, int colNum) throws ValidateException {
+  public FieldElement(XReport stampa, Attributes attrs, int lineNum, int colNum) throws ValidateException {
     super(stampa, attrs, lineNum, colNum);
   }
 
@@ -294,7 +294,7 @@ public class FieldElement extends ChunkElement implements UserCalcListener {
   }
 
   @Override
-  public List<Elemento> generate(Group gruppo, Stampa stampa, Elemento padre) throws GenerateException {
+  public List<Elemento> generate(Group gruppo, XReport stampa, Elemento padre) throws GenerateException {
     try {
       salvaStampaGruppo(stampa, gruppo);
       Object value = null;
@@ -334,7 +334,7 @@ public class FieldElement extends ChunkElement implements UserCalcListener {
     }
   }
 
-  protected Elemento createOutputElement(Stampa stampa, Elemento padre) throws GenerateException {
+  protected Elemento createOutputElement(XReport stampa, Elemento padre) throws GenerateException {
     BloccoTesto bloccoTesto = stampa.getFactoryElementi().creaBloccoTesto(stampa, this, padre);
     bloccoTesto.fineGenerazione();
     return bloccoTesto;

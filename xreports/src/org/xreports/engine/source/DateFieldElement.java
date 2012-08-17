@@ -7,9 +7,9 @@ import java.text.SimpleDateFormat;
 
 import org.xml.sax.Attributes;
 
-import org.xreports.stampa.Stampa;
-import org.xreports.stampa.validation.ValidateException;
-import org.xreports.stampa.validation.XMLSchemaValidationHandler;
+import org.xreports.engine.XReport;
+import org.xreports.engine.validation.ValidateException;
+import org.xreports.engine.validation.XMLSchemaValidationHandler;
 
 /**
  * @author pier
@@ -22,7 +22,7 @@ public class DateFieldElement extends FieldElement {
 
   private SimpleDateFormat    c_dateFormat;
 
-  public DateFieldElement(Stampa stampa, Attributes attrs, int lineNum, int colNum) throws ValidateException {
+  public DateFieldElement(XReport stampa, Attributes attrs, int lineNum, int colNum) throws ValidateException {
     super(stampa, attrs, lineNum, colNum);
   }
 

@@ -26,15 +26,16 @@ import org.xreports.expressions.symbols.Field;
 import org.xreports.expressions.symbols.Function;
 import org.xreports.expressions.symbols.MethodCall;
 import org.xreports.expressions.symbols.Symbol;
-import org.xreports.stampa.ResolveException;
-import org.xreports.stampa.Stampa;
-import org.xreports.stampa.StampaException;
-import org.xreports.stampa.output.Colore;
-import org.xreports.stampa.output.impl.GenerateException;
-import org.xreports.stampa.output.impl.itext.DocumentoIText;
-import org.xreports.stampa.output.impl.itext.PageListener;
-import org.xreports.stampa.validation.ValidateException;
-import org.xreports.stampa.validation.XMLSchemaValidationHandler;
+import org.xreports.engine.ResolveException;
+
+import org.xreports.engine.StampaException;
+import org.xreports.engine.XReport;
+import org.xreports.engine.output.Colore;
+import org.xreports.engine.output.impl.GenerateException;
+import org.xreports.engine.output.impl.itext.DocumentoIText;
+import org.xreports.engine.output.impl.itext.PageListener;
+import org.xreports.engine.validation.ValidateException;
+import org.xreports.engine.validation.XMLSchemaValidationHandler;
 
 /**
  * Rappresenta un elemento del report XML significativo per il sistema. <br>
@@ -138,7 +139,7 @@ public abstract class AbstractElement extends AbstractNode implements IReportEle
   private VAlign              c_valign;
   private HAlign              c_halign;
 
-  private Stampa              c_stampa;
+  private XReport             c_stampa;
   private GroupModel          c_model;
   private Group               c_dataGroup;
 
@@ -187,10 +188,10 @@ public abstract class AbstractElement extends AbstractNode implements IReportEle
    * @param colNum
    *          colonna in cui appare il tag nel sorgente XML
    */
-  public AbstractElement(Stampa stampa, Attributes attrs, int lineNum, int colNum) throws ValidateException {
+  public AbstractElement(XReport report, Attributes attrs, int lineNum, int colNum) throws ValidateException {
     super(attrs, lineNum, colNum);
     c_elementiFigli = new LinkedList<IReportNode>();
-    c_stampa = stampa;
+    c_stampa = report;
     loadAttributes(attrs);
     copyFromParentAttributes();
   }
@@ -664,8 +665,8 @@ public abstract class AbstractElement extends AbstractNode implements IReportEle
    * @param stampa
    * @param gruppo
    */
-  protected void salvaStampaGruppo(Stampa stampa, Group gruppo) {
-    c_stampa = stampa;
+  protected void salvaStampaGruppo(XReport report, Group gruppo) {
+    c_stampa = report;
     c_dataGroup = gruppo;
   }
 
@@ -754,12 +755,12 @@ public abstract class AbstractElement extends AbstractNode implements IReportEle
       //cambio il gruppo corrente col gruppo che mi hanno passato: questo permetterà di passare il gruppo
       //alle chiamate ricorsive di questo metodo, nel caso l'espressione coinvolga più valutazioni
       setGroup(group);
-      Stampa stampa = getStampa();
+      XReport r = getStampa();
       if (symbol.isField()) {
         return calcValue((Field) symbol, group);
-      } else if (symbol.isConstant() && stampa != null) {
+      } else if (symbol.isConstant() && r != null) {
         return resolveConstant(symbol);
-      } else if (symbol.isMethodCall() && stampa != null) {
+      } else if (symbol.isMethodCall() && r != null) {
         return resolveMethodCall((MethodCall) symbol, group);
       } else if (symbol.isUnaryFunction()) {
         return evaluateUnaryFunction((Function) symbol, group);
@@ -1876,7 +1877,7 @@ public abstract class AbstractElement extends AbstractNode implements IReportEle
    * @return l'oggetto Stampa salvato in precedenza con la
    *         {@link #salvaStampaGruppo(Stampa, Group)}
    */
-  public Stampa getStampa() {
+  public XReport getStampa() {
     return c_stampa;
   }
 
@@ -2222,8 +2223,8 @@ public abstract class AbstractElement extends AbstractNode implements IReportEle
     return c_elementiFigli.size();
   }
 
-  public void setStampa(Stampa stampa) {
-    c_stampa = stampa;
+  public void setStampa(XReport report) {
+    c_stampa = report;
   }
 
   @Override

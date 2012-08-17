@@ -5,8 +5,8 @@ package org.xreports.engine.source;
 
 import org.xml.sax.Attributes;
 
-import org.xreports.stampa.validation.ValidateException;
-import org.xreports.stampa.validation.XMLSchemaValidationHandler;
+import org.xreports.engine.validation.ValidateException;
+import org.xreports.engine.validation.XMLSchemaValidationHandler;
 
 /**
  * @author pier

@@ -5,8 +5,8 @@ import java.util.Locale;
 
 import org.xml.sax.Attributes;
 
-import org.xreports.stampa.Stampa;
-import org.xreports.stampa.validation.ValidateException;
+import org.xreports.engine.XReport;
+import org.xreports.engine.validation.ValidateException;
 import org.xreports.util.Text;
 
 /**
@@ -34,7 +34,7 @@ public class NumberFieldElement extends FieldElement {
 
   private NumberFormat        c_numberFormat;
 
-  public NumberFieldElement(Stampa stampa, Attributes attrs, int lineNum, int colNum) throws ValidateException {
+  public NumberFieldElement(XReport stampa, Attributes attrs, int lineNum, int colNum) throws ValidateException {
     super(stampa, attrs, lineNum, colNum);
   }
 
