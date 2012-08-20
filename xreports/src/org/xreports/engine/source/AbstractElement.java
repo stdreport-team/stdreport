@@ -27,8 +27,8 @@ import org.xreports.expressions.symbols.Function;
 import org.xreports.expressions.symbols.MethodCall;
 import org.xreports.expressions.symbols.Symbol;
 import org.xreports.engine.ResolveException;
-
 import org.xreports.engine.StampaException;
+
 import org.xreports.engine.XReport;
 import org.xreports.engine.output.Colore;
 import org.xreports.engine.output.impl.GenerateException;

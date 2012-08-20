@@ -1,15 +1,15 @@
-package ciscoop.stampa.output.impl.itext;
+package org.xreports.engine.output.impl.itext;
 
 import java.util.List;
 
-import org.xreports.engine.Stampa;
+import org.xreports.engine.XReport;
 import org.xreports.engine.output.Documento;
 import org.xreports.engine.output.Elemento;
 import org.xreports.engine.output.Linea;
 import org.xreports.engine.output.impl.GenerateException;
+import org.xreports.engine.source.AbstractElement.HAlign;
 import org.xreports.engine.source.LineElement;
 import org.xreports.engine.source.Measure;
-import org.xreports.engine.source.AbstractElement.HAlign;
 
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
@@ -18,7 +18,6 @@ import com.itextpdf.text.Element;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfContentByte;
-import com.itextpdf.text.pdf.PdfWriter;
 
 public class LineaIText extends ElementoIText implements Linea {
 
@@ -56,14 +55,10 @@ public class LineaIText extends ElementoIText implements Linea {
   /** allineamento orizzontale della linea rispetto al contenitore */
   private int             c_halign       = Element.ALIGN_CENTER;
 
-  private PdfWriter       c_writer;
-  private Document        c_document;
-  private Stampa          c_stampa;
   private LineElement     c_lineElem;
 
-  public LineaIText(XReport stampa, LineElement lineElem, Elemento padre) throws GenerateException {
-    setParent(padre);
-    c_stampa = stampa;
+  public LineaIText(XReport report, LineElement lineElem, Elemento parent) throws GenerateException {
+    super(report, parent);
     c_lineElem = lineElem;
 
     //prendo gli attributi dal tag
@@ -100,7 +95,7 @@ public class LineaIText extends ElementoIText implements Linea {
     if (colore == null || colore.length() == 0) {
       c_color = BaseColor.BLACK;
     } else {
-      DocumentoIText doc = (DocumentoIText) c_stampa.getDocumento();
+      DocumentoIText doc = getDocumentImpl();
       c_color = doc.getColorByName(colore);
       if (c_color == null) {
         throw new GenerateException(lineElem, "Colore linea non definito: " + colore);
@@ -132,7 +127,7 @@ public class LineaIText extends ElementoIText implements Linea {
     outerPara.setLeading(leading);
     c_height = leading;
     outerPara.add(outerChunk);
-    DocumentoIText doc = (DocumentoIText) stampa.getDocumento();
+    DocumentoIText doc = (DocumentoIText) report.getDocumento();
     doc.getPageListener().addLine(getUniqueID(), this);
   }
 
@@ -152,15 +147,8 @@ public class LineaIText extends ElementoIText implements Linea {
    * @throws GenerateException
    */
   public void draw(Rectangle rect) throws GenerateException {
-    DocumentoIText doc = (DocumentoIText) c_stampa.getDocumento();
-    c_writer = doc.getWriter();
-    c_document = doc.getDocument();
-    if (c_writer == null) {
-      throw new GenerateException(c_lineElem, "Il PDF writer è null: impossibile disegnare la linea.");
-    }
-    if (c_document == null) {
-      throw new GenerateException(c_lineElem, "Il documento è null: impossibile disegnare la linea.");
-    }
+    DocumentoIText doc = getDocumentImpl();
+    Document pdfDoc = doc.getDocument();
     // determino la larghezza massima disponibile nel foglio
     Rectangle drawRect = rect;
 
@@ -173,7 +161,7 @@ public class LineaIText extends ElementoIText implements Linea {
     ElementoIText parent = (ElementoIText) getParent();
     availWidth = parent.calcAvailWidth();
     if (parent instanceof DocumentoIText) {
-      minimumX = c_document.leftMargin();
+      minimumX = pdfDoc.leftMargin();
     } else {
       minimumX = rect.getLeft();
     }
@@ -201,7 +189,7 @@ public class LineaIText extends ElementoIText implements Linea {
     float startY = 0;
     if (c_absolutePos) {
       //la posizione assoluta si intende rispetto al documento			
-      startY = c_document.getPageSize().getHeight() - c_deltaY;
+      startY = pdfDoc.getPageSize().getHeight() - c_deltaY;
       startX = c_deltaX;
     } else {
       startX = spaceHorizBefore + minimumX + c_deltaX;
@@ -220,7 +208,7 @@ public class LineaIText extends ElementoIText implements Linea {
 
     //=================================================
     //finalmente scrivo la linea
-    PdfContentByte cb = c_writer.getDirectContentUnder();
+    PdfContentByte cb = doc.getWriter().getDirectContentUnder();
     cb.saveState();
     applyStyle(cb);
     for (int i = 0; i < c_count; i++) {

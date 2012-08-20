@@ -174,7 +174,7 @@ public class GroupList implements Evaluator, Serializable {
   private int loadQuery(String sql) throws GroupException {
     int recordsInDB = 0;
     try {
-      List<HashMap<String, Object>> righe = getModel().getStampa().getDatabase().getRowsAsMap(sql);
+      List<HashMap<String, Object>> righe = getModel().getStampa().getDatabase().getRows(sql, -1);
       loadDataList(righe, true);
       righe.clear();
     } catch (GroupException e) {

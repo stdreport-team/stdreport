@@ -1,8 +1,8 @@
-package ciscoop.stampa.output.impl.itext;
+package org.xreports.engine.output.impl.itext;
 
 import java.util.List;
 
-import org.xreports.engine.Stampa;
+import org.xreports.engine.XReport;
 import org.xreports.engine.output.Colore;
 import org.xreports.engine.output.Documento;
 import org.xreports.engine.output.Elemento;
@@ -23,9 +23,9 @@ public class ImmagineIText extends ElementoIText implements Immagine {
   private float c_width  = 0;
   private float c_height = 0;
 
-  public ImmagineIText(XReport stampa, ImageElement tagImage, Elemento padre) throws GenerateException {
-    setParent(padre);
-    chunk = creaImage(stampa, tagImage);
+  public ImmagineIText(XReport report, ImageElement tagImage, Elemento parent) throws GenerateException {
+    super(report, parent);
+    chunk = creaImage(tagImage);
   }
 
   @Override
@@ -48,18 +48,18 @@ public class ImmagineIText extends ElementoIText implements Immagine {
     return chunk;
   }
 
-  private Chunk creaImage(XReport stampa, ImageElement imageElem) throws GenerateException {
+  private Chunk creaImage(ImageElement imageElem) throws GenerateException {
     Chunk chunkForImage = null;
     try {
       
       //========== ricerca sorgente immagine ===========      
       String szSrc = imageElem.getSrc();
-      String foundFile = stampa.findResource(szSrc);
+      String foundFile = getReport().findResource(szSrc);
       if (foundFile == null) {
         throw new GenerateException(imageElem, "Non trovo l'immagine " + szSrc);
       }
       
-      DocumentoIText doc = (DocumentoIText)stampa.getDocumento();
+      DocumentoIText doc = getDocumentImpl();
       Image img = doc.getImageFromCache(foundFile);
       
       //========== gestione dimensioni ===========      

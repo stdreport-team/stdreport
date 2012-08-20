@@ -1,8 +1,8 @@
-package ciscoop.stampa.output.impl.itext;
+package org.xreports.engine.output.impl.itext;
 
 import java.util.List;
 
-import org.xreports.engine.Stampa;
+import org.xreports.engine.XReport;
 import org.xreports.engine.output.Documento;
 import org.xreports.engine.output.Elemento;
 import org.xreports.engine.output.Paragrafo;
@@ -23,16 +23,14 @@ public class ParagrafoIText extends ElementoIText implements Paragrafo {
   
   private Paragraph   paragraph  = null;
 
-  private Stampa      c_stampa;
   private TextElement c_textElem = null;
   private float       c_marginTop;
   private float       c_calcMinHeight;
 
-  public ParagrafoIText(XReport stampa, TextElement textElem, Elemento padre) throws GenerateException {
+  public ParagrafoIText(XReport report, TextElement textElem, Elemento parent) throws GenerateException {
+  	super(report, parent);
     c_textElem = textElem;
-    setParent(padre);
-    c_stampa = stampa;
-    paragraph = creaParagraph(stampa, textElem);
+    paragraph = creaParagraph(report, textElem);
     c_marginTop = textElem.getSpazioPrima();
   }
 
@@ -139,13 +137,6 @@ public class ParagrafoIText extends ElementoIText implements Paragrafo {
   @Override
   public void flush(Documento documento) throws GenerateException {
 
-  }
-
-  /**
-   * @return the c_stampa
-   */
-  public Stampa getStampa() {
-    return c_stampa;
   }
 
   @Override

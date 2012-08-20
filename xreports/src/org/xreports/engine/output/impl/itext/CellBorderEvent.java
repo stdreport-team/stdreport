@@ -1,7 +1,7 @@
 /**
  * 
  */
-package ciscoop.stampa.output.impl.itext;
+package org.xreports.engine.output.impl.itext;
 
 import org.xreports.engine.source.Border;
 import org.xreports.engine.source.CellElement;

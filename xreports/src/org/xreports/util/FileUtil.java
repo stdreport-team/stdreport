@@ -181,23 +181,6 @@ public class FileUtil {
   }
 
   /**
-   * Recupera una proprietà da un file di properties
-   * 
-   * @param String
-   *          nomeProprieta - Il nome della proprità da leggere
-   * @return String - La proprietà trovata
-   */
-  public static String recuperaProprieta(String nomeProprieta) throws IllegalArgumentException {
-    AppPropertiesBase properties = AppPropertiesBase.getProperties();
-    String prop = properties.getProp(nomeProprieta);
-    if (prop == null) {
-      throw new IllegalArgumentException("Manca la proprietà: " + nomeProprieta);
-    }
-
-    return prop;
-  }
-
-  /**
    * Spezza il path assoluto del file passato nei suo vari componenti e li ritorna in un array di stringhe. Ad esempio:<br>
    * <tt>splitFilePath("C:/temp/pippo/pluto.txt", false) --> </tt> <tt>{"C:/" , "temp" , "pippo" , "pluto.txt"}</tt> <br/>
    * <tt>splitFilePath("C:/temp/pippo/pluto.txt", true)  --> </tt> <tt>{"C:/" , "temp" , "pippo" , "pluto", "txt"}</tt>

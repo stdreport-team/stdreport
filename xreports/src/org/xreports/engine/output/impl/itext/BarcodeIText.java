@@ -23,22 +23,20 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 public class BarcodeIText extends ElementoIText implements Immagine {
   /**
-   * interlinea di default per i barcode
+   * default leading for barcodes
    */
   public static final float DEFAULT_LEADING = 1.1f;
 
   private Paragraph         c_barcode       = null;
   private BarcodeElement    c_sourceElem    = null;
-  private XReport            c_stampa;
 
   private float             c_width         = 0;
   private float             c_height        = 0;
 
-  public BarcodeIText(XReport stampa, BarcodeElement tagBarcode, Elemento padre) throws GenerateException {
-    setParent(padre);
-    c_stampa = stampa;
+  public BarcodeIText(XReport report, BarcodeElement tagBarcode, Elemento padre) throws GenerateException {
+    super(report, padre);
     c_sourceElem = tagBarcode;
-    c_barcode = creaImage(stampa, tagBarcode);
+    c_barcode = creaImage(tagBarcode);
   }
 
   @Override
@@ -95,8 +93,7 @@ public class BarcodeIText extends ElementoIText implements Immagine {
         barcode = b39;
       }
       Image imageBar = null;
-      DocumentoIText doc = (DocumentoIText) c_stampa.getDocumento();
-      PdfWriter writer = doc.getWriter();
+      PdfWriter writer = getWriter();
       PdfContentByte cb = writer.getDirectContent();
       if (barcode != null) {
         barcode.setCode(value);       
@@ -116,7 +113,7 @@ public class BarcodeIText extends ElementoIText implements Immagine {
     }
   }
 
-  private Paragraph creaImage(XReport stampa, BarcodeElement elem) throws GenerateException {
+  private Paragraph creaImage(BarcodeElement elem) throws GenerateException {
     try {
       Image imBar = getBarcodeImage(elem);
       float hei = imBar.getHeight();

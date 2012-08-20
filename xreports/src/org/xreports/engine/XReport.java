@@ -51,10 +51,10 @@ import org.xreports.expressions.symbols.EvaluateException;
 import org.xreports.expressions.symbols.Evaluator;
 import org.xreports.expressions.symbols.Symbol;
 
-import org.xreports.engine.engine.MainReportInfo;
-import org.xreports.engine.engine.Parameter;
-import org.xreports.engine.engine.ReportInfo;
-import org.xreports.engine.engine.TabbedFileReader;
+import org.xreports.engine.MainReportInfo;
+import org.xreports.engine.Parameter;
+import org.xreports.engine.ReportInfo;
+import org.xreports.engine.TabbedFileReader;
 import org.xreports.engine.output.Colore;
 import org.xreports.engine.output.Documento;
 import org.xreports.engine.output.FactoryCreator;

@@ -1,4 +1,4 @@
-package ciscoop.stampa.output.impl.itext;
+package org.xreports.engine.output.impl.itext;
 
 import java.awt.Color;
 import java.awt.Paint;
@@ -35,7 +35,6 @@ import org.jfree.ui.TextAnchor;
 
 import org.xreports.datagroup.Group;
 import org.xreports.engine.ResolveException;
-import org.xreports.engine.XReport;;
 import org.xreports.engine.XReport;
 import org.xreports.engine.output.Chart;
 import org.xreports.engine.output.Colore;
@@ -44,6 +43,7 @@ import org.xreports.engine.output.Elemento;
 import org.xreports.engine.output.impl.GenerateException;
 import org.xreports.engine.source.ChartElement;
 import org.xreports.engine.source.ChartElement.GraphType;
+import org.xreports.expressions.symbols.EvaluateException;
 import org.xreports.expressions.symbols.Evaluator;
 import org.xreports.expressions.symbols.Symbol;
 import org.xreports.util.Text;
@@ -69,9 +69,6 @@ public class ChartIText extends ElementoIText implements Chart, Evaluator {
   private Chunk              outerChunk    = null;
   private Paragraph          outerPara     = null;
 
-  private PdfWriter          c_writer;
-  private Document           c_document;
-  private XReport             c_stampa;
   private ChartElement       c_chartElem;
   private float              c_height;
   private float              c_marginTop;
@@ -81,9 +78,8 @@ public class ChartIText extends ElementoIText implements Chart, Evaluator {
 
   private Group              c_currentGroup;
 
-  public ChartIText(XReport stampa, ChartElement chartElem, Elemento padre) throws GenerateException {
-    setParent(padre);
-    c_stampa = stampa;
+  public ChartIText(XReport report, ChartElement chartElem, Elemento padre) throws GenerateException {
+    super(report, padre);
     c_chartElem = chartElem;
     outerChunk = new Chunk(" ");
     outerChunk.setGenericTag(getUniqueID());
@@ -93,8 +89,7 @@ public class ChartIText extends ElementoIText implements Chart, Evaluator {
     c_height = c_chartElem.getHeight() + c_marginTop + c_marginBottom + c_topDistance;
     outerPara.setLeading(c_height);
     outerPara.add(outerChunk);
-    DocumentoIText doc = (DocumentoIText) stampa.getDocumento();
-    doc.getPageListener().addChart(getUniqueID(), this);
+    getDocumentImpl().getPageListener().addChart(getUniqueID(), this);
   }
 
   @Override
@@ -151,7 +146,7 @@ public class ChartIText extends ElementoIText implements Chart, Evaluator {
   }
 
   private void setCommonAttrs(JFreeChart chart) throws EvaluateException {
-    Colore c = c_stampa.getColorByName(c_chartElem.getBackgroundColor());
+    Colore c = getReport().getColorByName(c_chartElem.getBackgroundColor());
     if (c != null) {
       chart.setBackgroundPaint(convertToAWTColor(c));
     }
@@ -669,23 +664,16 @@ public class ChartIText extends ElementoIText implements Chart, Evaluator {
    * @throws GenerateException
    */
   public void draw(Rectangle rect) throws GenerateException {
-    DocumentoIText doc = (DocumentoIText) c_stampa.getDocumento();
-    c_writer = doc.getWriter();
-    c_document = doc.getDocument();
-    if (c_writer == null) {
-      throw new GenerateException(c_chartElem, "Il PDF writer è null: impossibile disegnare il grafico.");
-    }
-    if (c_document == null) {
-      throw new GenerateException(c_chartElem, "Il documento è null: impossibile disegnare il grafico.");
-    }
+    PdfWriter writer = getWriter();
+    Document c_document = getDocumentImpl().getDocument();
 
     JFreeChart chart = getChart();
     if (chart == null) {
-      c_stampa.addWarningMessage(c_chartElem.toString() + ", il grafico risulta null, non lo disegno");
+      getReport().addWarningMessage(c_chartElem.toString() + ", il grafico risulta null, non lo disegno");
       return;
     }
 
-    PdfContentByte cb = c_writer.getDirectContent();
+    PdfContentByte cb = writer.getDirectContent();
     float chartWidth = c_chartElem.getWidth();
     float chartHeight = c_chartElem.getHeight();
     // PdfTemplate tp = cb.createTemplate(width, height);    

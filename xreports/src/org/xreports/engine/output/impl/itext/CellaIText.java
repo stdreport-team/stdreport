@@ -1,8 +1,8 @@
-package ciscoop.stampa.output.impl.itext;
+package org.xreports.engine.output.impl.itext;
 
 import java.util.List;
 
-import org.xreports.engine.Stampa;
+import org.xreports.engine.XReport;
 import org.xreports.engine.output.Cella;
 import org.xreports.engine.output.Documento;
 import org.xreports.engine.output.Elemento;
@@ -30,7 +30,6 @@ public class CellaIText extends ElementoIText implements Cella {
 
   /** Elemento itext per rendere la cella */
   private PdfPCell          c_cella              = null;
-  protected Stampa          c_stampa;
   protected CellElement     c_elemCella;
   /** flag usato per sapere se sto aggiungendo il primo figlio a questa cella */
   private boolean           bFirstChild          = true;
@@ -49,10 +48,9 @@ public class CellaIText extends ElementoIText implements Cella {
    */
   Paragraph                 c_autoParag          = null;
 
-  public CellaIText(XReport stampa, CellElement cellElem, Elemento padre) throws GenerateException {
-    c_stampa = stampa;
+  public CellaIText(XReport report, CellElement cellElem, Elemento parent) throws GenerateException {
+    super(report, parent);
     c_elemCella = cellElem;
-    setParent(padre);
   }
 
 //  private Paragraph createDefaultParagraph() throws GenerateException {
@@ -107,7 +105,7 @@ public class CellaIText extends ElementoIText implements Cella {
 
   @Override
   public void addElement(Elemento figlio) throws GenerateException {
-    creaPdfCell(c_stampa, c_elemCella);
+    creaPdfCell(getReport(), c_elemCella);
     Object obj = figlio.getContent(this);
     if (obj != null) {
       if (bFirstChild) {
@@ -158,7 +156,7 @@ public class CellaIText extends ElementoIText implements Cella {
 
   @Override
   public Object getContent(Elemento padre) throws GenerateException {
-    creaPdfCell(c_stampa, c_elemCella);
+    creaPdfCell(getReport(), c_elemCella);
     return c_cella;
   }
 

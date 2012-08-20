@@ -1,8 +1,8 @@
-package ciscoop.stampa.output.impl.itext;
+package org.xreports.engine.output.impl.itext;
 
 import java.util.List;
 
-import org.xreports.engine.Stampa;
+import org.xreports.engine.XReport;
 import org.xreports.engine.output.Colore;
 import org.xreports.engine.output.Documento;
 import org.xreports.engine.output.Elemento;
@@ -24,14 +24,12 @@ public class MarginboxIText extends ElementoIText implements Marginbox {
   /** altezza della linea: comprende margini e spessore linea */
   private float            c_height;
 
-  private Stampa           c_stampa;
   private MarginboxElement c_marginboxElem;
 
-  public MarginboxIText(XReport stampa, MarginboxElement lineElem, Elemento padre) throws GenerateException {
-    setParent(padre);
-    c_stampa = stampa;
+  public MarginboxIText(XReport report, MarginboxElement lineElem, Elemento parent) throws GenerateException {
+    super(report, parent);
     c_marginboxElem = lineElem;
-    DocumentoIText doc = (DocumentoIText) stampa.getDocumento();
+    DocumentoIText doc = (DocumentoIText) report.getDocumento();
     doc.getPageListener().setMarginbox(this);
   }
 
@@ -55,7 +53,7 @@ public class MarginboxIText extends ElementoIText implements Marginbox {
 
     BaseColor baseColor;
     Colore col = c_marginboxElem.getColore();
-    DocumentoIText doc = (DocumentoIText) c_stampa.getDocumento();
+    DocumentoIText doc = getDocumentImpl();
     if (col == null) {
       baseColor = BaseColor.BLACK;
     } else {
