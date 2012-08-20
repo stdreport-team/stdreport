@@ -3,7 +3,6 @@ package org.xreports.datagroup;
 import java.util.Map;
 
 import org.xreports.expressions.symbols.EvaluateException;
-import org.xreports.engine.DataException;
 
 public class RootGroup extends Group {
   /**
@@ -63,7 +62,7 @@ public class RootGroup extends Group {
    * 
    * @return prossimo ID di gruppo
    */
-  int nextID() {
+  synchronized int nextID() {
     if (m_lastGroupID < 0)
       m_lastGroupID = 0;
     return (++m_lastGroupID);

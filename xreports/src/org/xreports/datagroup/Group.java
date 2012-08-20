@@ -20,18 +20,19 @@ import org.xreports.engine.ResolveException;
 import org.xreports.engine.source.GroupEvaluator;
 
 /**
- * Singola istanza di un {@link GroupModel}. <br/>
- * Un'istanza di {@link Group} ha le seguenti caratteristiche:
+ * Objects of this class represent {@link GroupModel} instances. <br/>
+ * An instance of {@link Group} has this characteristics:
  * <ul>
- * <li>ha un {@link GroupModel} di riferimento, da cui eredita nome, campi</li>
- * <li>ha un riferimento al gruppo radice, {@link RootGroup}, padre dell'intera
- * gerarchia dei gruppi</li>
- * <li>appartiene ad una lista ( {@link GroupList}) di gruppi 'fratelli</li>
- * <li>ha una lista di gruppi figli per ogni possibile gruppo figlio definito
- * nel relativo modello</li>
+ * <li>a reference to his {@link GroupModel}, from which inherits its properties,
+ *     namely the <b>name</b> and the <b>fields collection</b>;
+ *     it's accessible by the {@link #getModel()} method</li>
+ * <li>a reference to the groups hierarchy root, a {@link RootGroup} object,
+ *     accessible by the {@link #getRootGroup()} method</li>
+ * <li>it belongs to a list of siblings groups, maintained by a ( {@link GroupList}) object,
+ *     accessible by the {@link #getParentList()} method</li>
+ * <li>it maintains a collection of child groups, as defined by its {@link GroupModel};
+ *     for example to access the list of child group named "X", call the {@link #getChildList(String)} method.</li>
  * </ul>
- * 
- * @author pier
  * 
  */
 public class Group implements Serializable {
@@ -41,41 +42,43 @@ public class Group implements Serializable {
    */
   private static final long      serialVersionUID = -9049101621843462506L;
 
-  /** gruppo progenitore, radice di tutta la gerarchia dei gruppi */
+  /** the groups hierarchy root, that is the group ancestor of all groups belonging to the hierarchy */
   private RootGroup              m_builder;
 
-  /** il mio modello di gruppo */
+  /** the model from which this group inherits properties */
   protected transient GroupModel m_model;
 
-  /** identificativo univoco del mio modello di gruppo */
+  /** numeric id for accessing the model, used to fetch the model from the models' cache */
   private Integer                m_modelId;
 
-  /** lista a cui appartengo */
+  /** list this group belong to */
   private GroupList              m_parentList;
 
   public static transient int    s_groupCount     = 0;
 
   /**
-   * Dati dei gruppi figli di questo gruppo. <br/>
-   * <b>key</b> = nome gruppo figlio <br/>
-   * <b>value</b> = lista delle istanze dei gruppi, con nome=key, figli di
-   * questo.
+   * Lists of child groups of this group. <br/>
+   * <b>key</b> = child group name <br/>
+   * <b>value</b> = child group instances; all this groups have {@link #getName()}=key.
    */
   private Map<String, GroupList> m_childGroups    = new LinkedHashMap<String, GroupList>();
-  /** indice gruppo 0-based (è univoco fra i suoi fratelli) */
+  
+  /** group index, that is the 0-based position of this group in his siblings list
+   * (every group has a unique group index) */
   private int                    m_groupIndex     = 0;
 
-  /** true sse a questo gruppo sono stati assegnati dei dati */
+  /** true iff this group has data assigned to it */
   protected boolean              m_hasData        = false;
 
+  /** tag of this group: is a generic string defined by the external program who uses this class */
   protected String               m_tag;
 
-  /** identificativo univoco di questa istanza di gruppo */
+  /** unique identifier of this group instance among all groups of the hierarchy it belongs */
   private int                    m_groupID        = -1;
 
   /**
-   * Mappa nome-->valore di tutti i campi 'reali' di questo gruppo. NB: il nome
-   * è sempre mantenuto in lower-case
+   * name-->value map of all fields of this group. Important: the name
+   * is forced in lower-case
    */
   private Map<String, DataField> m_fields         = new HashMap<String, DataField>();
 
@@ -84,28 +87,28 @@ public class Group implements Serializable {
   }
 
   /**
-   * Costruttore standard.
+   * Standard constructor.
    * 
    * @param root
-   *          oggetto a capo della intera gerarchia dei gruppi
+   *          Hierarchy root this group belongs
    * @param model
-   *          modello di riferimento del gruppo
+   *          model of this group
    * @param list
-   *          lista di cui fa parte il gruppo
+   *          list to which this group belongs 
    */
   Group(RootGroup root, GroupModel model, GroupList list) {
     if (model == null) {
       throw new NullPointerException("GroupModel can't be null");
     }
     if (root == null) {
-      throw new NullPointerException("La radice di un gruppo non puo' essere null");
+      throw new NullPointerException("The hierarchy root can't be null");
     }
     _initID(root);
     setModel(model);
     m_parentList = list;
     m_builder = root;
 
-    //inizializzo le liste dei possibili gruppi figli di questo
+    //initialize the list of possible child groups
     for (GroupModel childModel : model.getChildModels()) {
       addChildList(childModel);
     }
